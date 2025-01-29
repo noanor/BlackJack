@@ -1,9 +1,20 @@
-public class CardsOnHand 
+public class CardsOnHand
 {
     public List<int> LstCards = new List<int>();
     public int score { get; set; }
 
     static Random rnd = new Random();
+
+    static int GenerateDeck()
+    {
+        int rndCard = rnd.Next(1, 49);
+
+        // https://math.stackexchange.com/questions/2312962/probability-of-drawing-certain-cards-in-blackjack
+        // Create a deck to draw out cards randomly later
+        // while (int i < 1 < 4) 
+        // { deck[c] = 2}...
+    }
+
     public CardsOnHand()
     {
         int c1 = rnd.Next(2, 12);
@@ -24,6 +35,6 @@ public class CardsOnHand
         return LstCards.Sum();
     }
 
-    
-    
+
+
 }

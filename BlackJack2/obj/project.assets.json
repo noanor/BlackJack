@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\noano\\.nuget\\packages\\": {}
+    "C:\\Users\\Noa\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\noano\\repos\\BlackJack2\\BlackJack2.csproj",
+      "projectUniqueName": "C:\\Users\\Noa\\repos\\BlackJack\\BlackJack2\\BlackJack2.csproj",
       "projectName": "BlackJack2",
-      "projectPath": "C:\\Users\\noano\\repos\\BlackJack2\\BlackJack2.csproj",
-      "packagesPath": "C:\\Users\\noano\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\noano\\repos\\BlackJack2\\obj\\",
+      "projectPath": "C:\\Users\\Noa\\repos\\BlackJack\\BlackJack2\\BlackJack2.csproj",
+      "packagesPath": "C:\\Users\\Noa\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Noa\\repos\\BlackJack\\BlackJack2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\noano\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Noa\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
