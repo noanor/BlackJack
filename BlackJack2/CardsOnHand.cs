@@ -1,32 +1,13 @@
 public class CardsOnHand
 {
-    public List<int> LstCards = new List<int>();
-    public int score { get; set; }
-
+    static Deck mainDeck = new Deck();
     static Random rnd = new Random();
 
-    
-
-    public CardsOnHand()
+    public int DrawCard()
     {
-        int c1 = rnd.Next(2, 12);
-        int c2 = rnd.Next(2, 12);
-
-        LstCards.Add(c1);
-        LstCards.Add(c2);
+        int newCard = mainDeck.LstDeck.Find(x => x == rnd.Next(1, 12));
+        
+        return newCard;
     }
-
-    public void DrawCard()
-    {
-        int newCard = rnd.Next(2, 12);
-        LstCards.Add(newCard);
-    }
-
-    public int CalcScore()
-    {
-        return LstCards.Sum();
-    }
-
-
 
 }

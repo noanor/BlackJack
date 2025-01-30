@@ -8,4 +8,6 @@
 
 // Console.WriteLine("Your score: " + coh1.CalcScore());
 
-Deck deckObj = new Deck();
+CardsOnHand coh = new CardsOnHand();
+
+Console.WriteLine(coh.DrawCard());
