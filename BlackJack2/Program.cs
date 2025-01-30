@@ -10,4 +10,6 @@
 
 CardsOnHand coh = new CardsOnHand();
 
-Console.WriteLine(coh.DrawCard());
+Console.WriteLine("Welcome to Black Jack!\nPlease place your bets:");
+double usrBet = double.Parse(Console.ReadLine());
+

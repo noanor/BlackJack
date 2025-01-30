@@ -1,4 +1,5 @@
-public class Deck {
+public class Deck
+{
   public List<int> LstDeck = new List<int>();
   public Deck()
   {
@@ -9,7 +10,7 @@ public class Deck {
     while (i <= 48)
     {
       if (i <= 4) { LstDeck.Add(2); }
-      else if (i <= 8)  { LstDeck.Add(3); }
+      else if (i <= 8) { LstDeck.Add(3); }
       else if (i <= 12) { LstDeck.Add(4); }
       else if (i <= 16) { LstDeck.Add(5); }
       else if (i <= 20) { LstDeck.Add(6); }
