@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BlackJack2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0e0071253fa1f40857d540b3c56596ed83454603")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2db739268b8120bf388c584552d434b31a4bae73")]
 [assembly: System.Reflection.AssemblyProductAttribute("BlackJack2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BlackJack2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
