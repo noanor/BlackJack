@@ -8,7 +8,7 @@ public class Game
     static Random rnd = new Random();
     public void UserDrawCard()
     {
-        int newCard = mainDeck.LstDeck.Find(x => x == rnd.Next(1, 12));
+        int newCard = mainDeck.LstDeck.Find(x => x == rnd.Next(1, mainDeck.LstDeck.Count()));
 
         userCards.Add(mainDeck.LstDeck[newCard]);
         Console.WriteLine($"Your new card's value is {mainDeck.LstDeck[newCard]}");
