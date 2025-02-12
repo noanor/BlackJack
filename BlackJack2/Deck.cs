@@ -3,7 +3,6 @@ public class Deck
     public List<int> LstDeck = new List<int>();
     public Deck()
     {
-
         // https://math.stackexchange.com/questions/2312962/probability-of-drawing-certain-cards-in-blackjack
         // Create a deck to draw out cards randomly later
 
