@@ -6,6 +6,13 @@ public class Deck
         // https://math.stackexchange.com/questions/2312962/probability-of-drawing-certain-cards-in-blackjack
         // Create a deck to draw out cards randomly later
 
+        /*
+        Clover : .1
+        Spade  : .2
+        Heart  : .3
+        Diamond: .4
+        */
+
         for (int i = 0; i < 52; i++)
         {
             if (i < 4) { LstDeck.Add(2); }

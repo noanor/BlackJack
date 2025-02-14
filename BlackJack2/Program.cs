@@ -4,11 +4,24 @@ string theName = Console.ReadLine();
 
 Account newAcc = new Account(theName);
 
+/* 
+Split situation
+
+Conditions
+1. Pair
+2. Bet same amount on both hands, balance must be greater or equal to bet after bet
+
+*/
+
+/*
+    Game continues until there is no more money in the account
+*/
 while (newAcc.Balance > 0)
 {
     int gameCounter = 0;
     List<Game> lstGames = new List<Game>();
     lstGames.Add(new Game());
+    Game currentGame = lstGames[gameCounter];
 
     Console.WriteLine($"Welcome to Black Jack, {newAcc.Name}!\nPlease place your bets:");
     decimal usrBet = decimal.Parse(Console.ReadLine());
@@ -18,64 +31,94 @@ while (newAcc.Balance > 0)
         usrBet = decimal.Parse(Console.ReadLine());
     }
 
-    lstGames[gameCounter].StartGame(usrBet);
+    currentGame.StartGame(usrBet);
     newAcc.Balance -= usrBet;
 
-    while (lstGames[gameCounter].UserScore < 21)
+    while (currentGame.UserScore < 21)
     {
         Console.Write("Hit or Stand?");
         string hitOrStand = Console.ReadLine();
 
-        if (hitOrStand.ToLower() == "hit")
+        if ((hitOrStand.ToLower() == "hit") || hitOrStand == "1")
         {
-            lstGames[gameCounter].UserDrawCard();
-            Console.WriteLine($"Your score: {lstGames[gameCounter].UserScore}");
-            // lstGames[gameCounter].PrintCurrentDeck();
+            currentGame.UserDrawCard();
+            Console.WriteLine($"Your score: {currentGame.UserScore}");
+            // currentGame.PrintCurrentDeck();
         }
-        else if (hitOrStand.ToLower() == "stand")
+        else if ((hitOrStand.ToLower() == "stand") || hitOrStand == "2")
         {
-            Console.WriteLine($"Dealer's second card is {lstGames[gameCounter].dealerCards[1]}");
-            Console.WriteLine($"Dealer score: {lstGames[gameCounter].DealerScore}");
+            Console.WriteLine($"Dealer's second card is {currentGame.dealerCards[1]}");
+            Console.WriteLine($"Dealer score: {currentGame.DealerScore}");
             break;
         }
     }
 
     // Dealer draws cards until his score is 17 or above
-    while (lstGames[gameCounter].DealerScore < 17)
+    while (currentGame.DealerScore < 17)
     {
-        lstGames[gameCounter].DealerDrawCard();
+        currentGame.DealerDrawCard();
     }
-    Console.WriteLine($"Dealer's score: {lstGames[gameCounter].DealerScore}");
+    Console.WriteLine($"Dealer's score: {currentGame.DealerScore}");
 
-    if ((lstGames[gameCounter].UserScore > lstGames[gameCounter].DealerScore) && (lstGames[gameCounter].UserScore <= 21) || (lstGames[gameCounter].UserScore <= 21) && (lstGames[gameCounter].DealerScore > 21)) // Winning situtaion
+    /*
+    SITUATIONS & MESSAGES
+    */
+
+    // Situations
+    bool winningSituation = ((currentGame.UserScore > currentGame.DealerScore) && (currentGame.UserScore <= 21) || (currentGame.UserScore <= 21) && (currentGame.DealerScore > 21));
+    bool tieGame = (currentGame.UserScore == currentGame.DealerScore) || ((currentGame.UserScore > 21) && (currentGame.DealerScore > 21));
+
+    // Messages
+    string message = $"Dealer's score: {currentGame.DealerScore}\nThe house wins {usrBet:C}";
+    string messageWin = $"Dealer's score: {currentGame.DealerScore}\nYou win {(usrBet * 2):C}!";
+    string messageBJ = $"Dealer's score: {currentGame.DealerScore}\nYou win {(usrBet + (usrBet * 1.5m)):C}!";
+    string messageTie = $"Dealer's score: {currentGame.DealerScore}\nTie game, you got {usrBet:C} back";
+
+    if (winningSituation) // Winning situtaion
     {
-        if(lstGames[gameCounter].IsBlackJack()) // BlackJack situation
+        if (currentGame.IsBlackJack()) // BlackJack situation
         {
-            Console.WriteLine($"Dealer's score: {lstGames[gameCounter].DealerScore}");
             newAcc.Balance += usrBet + (usrBet * 1.5m);
-            Console.WriteLine($"You win ${(usrBet + (usrBet * 1.5m)):C}!");
-
+            message = messageBJ;
         }
-        else 
+        else
         {
-            Console.WriteLine($"Dealer's score: {lstGames[gameCounter].DealerScore}");
             newAcc.Balance += (usrBet * 2);
-            Console.WriteLine($"You win ${(usrBet * 2):C}!");
-
+            message = messageWin;
         }
     }
-    else if ((lstGames[gameCounter].UserScore == lstGames[gameCounter].DealerScore) || ((lstGames[gameCounter].UserScore > 21) && (lstGames[gameCounter].DealerScore > 21))) // Tie situation
+    else if (tieGame) // Tie situation
     {
-        Console.WriteLine($"Dealer's score: {lstGames[gameCounter].DealerScore}");
         newAcc.Balance += usrBet;
-        Console.WriteLine($"Tie game, you got {usrBet:C} back");
+        message = messageTie;
     }
-    else // Losing situation
-    {
-        Console.WriteLine($"Dealer's score: {lstGames[gameCounter].DealerScore}");
-        Console.WriteLine($"The house wins {usrBet:C}");
-    }
+    // else // Losing situation
+    // {
+    //     Console.WriteLine($"Dealer's score: {currentGame.DealerScore}");
+    //     Console.WriteLine($"The house wins {usrBet:C}");
+    // }
+
+    Console.WriteLine(message);
 
     Console.WriteLine($"Balance: {newAcc.Balance:C}\n");
     gameCounter++;
+
+    if (newAcc.Debt > 0)
+    {
+        newAcc.DebtInc();
+    }
+
+    if (newAcc.Balance == 0)
+    {
+        Console.WriteLine("Take loan?\nType 'YES' or 'NO'");
+        string loanDecide = Console.ReadLine();
+
+        if (loanDecide == "YES")
+        {
+            Console.WriteLine("Loan amount:");
+            decimal loanAmount = decimal.Parse(Console.ReadLine());
+            newAcc.Debt = loanAmount;
+            newAcc.Balance = loanAmount;
+        }
+    }
 }
