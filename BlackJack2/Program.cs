@@ -1,5 +1,4 @@
-﻿
-Console.WriteLine("Hello, what is your name?");
+﻿Console.WriteLine("Hello, what is your name?");
 string theName = Console.ReadLine();
 
 Account newAcc = new Account(theName);
@@ -16,21 +15,43 @@ Conditions
 /*
     Game continues until there is no more money in the account
 */
+
+
 while (newAcc.Balance > 0)
 {
     int gameCounter = 0;
-    List<Game> lstGames = new List<Game>();
+    List<Game> lstGames = [];
     lstGames.Add(new Game());
     Game currentGame = lstGames[gameCounter];
 
-    Console.WriteLine($"Welcome to Black Jack, {newAcc.Name}!\nPlease place your bets:");
-    decimal usrBet = decimal.Parse(Console.ReadLine());
-    if (usrBet > newAcc.Balance)
+    Console.WriteLine($"Welcome to Black Jack, {newAcc.Name}!\nPlease place your bets or type 'Debt' to pay debts:");
+    string usrBetS = Console.ReadLine();
+
+    if ((usrBetS.ToLower() == "debt") && (newAcc.Debt > 0))
+    {
+        Console.Write("Downpayment amount: ");
+        decimal usrDownPayment = decimal.Parse(Console.ReadLine());
+
+        if (usrDownPayment <= newAcc.Balance)
+        {
+            newAcc.Balance -= usrDownPayment;
+            newAcc.Debt -= usrDownPayment;
+        }
+        else { Console.WriteLine("\nInsufficient funds."); }
+
+        Console.WriteLine($"Account balance: {newAcc.Balance}\nAccount debt: {newAcc.Debt.ToString("0.00")}");
+
+        Console.WriteLine("Place bet to continue betting:");
+        usrBetS = Console.ReadLine();
+    }
+    else if (decimal.Parse(usrBetS) > newAcc.Balance)
     {
         Console.WriteLine($"Cannot bet more than account balance.\nBalance: {newAcc.Balance:C}\n\nPlease place your bet:");
-        usrBet = decimal.Parse(Console.ReadLine());
+        usrBetS = Console.ReadLine();
     }
 
+
+    decimal usrBet = decimal.Parse(usrBetS);
     currentGame.StartGame(usrBet);
     newAcc.Balance -= usrBet;
 
@@ -117,8 +138,12 @@ while (newAcc.Balance > 0)
         {
             Console.WriteLine("Loan amount:");
             decimal loanAmount = decimal.Parse(Console.ReadLine());
-            newAcc.Debt = loanAmount;
+
+            if (newAcc.Debt != 0) { newAcc.Debt += loanAmount; }
+            else { newAcc.Debt = loanAmount; }
+
             newAcc.Balance = loanAmount;
+            Console.WriteLine($"Current debt: {newAcc.Debt.ToString("0.00")}");
         }
     }
 }

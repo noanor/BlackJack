@@ -1,57 +1,56 @@
 public class Game
 {
-    public List<int> userCards = new List<int>();
-    public List<int> dealerCards = new List<int>();
-    // private int newCard 
-    // { 
-    //     get { return mainDeck.LstDeck[rnd.Next(0, mainDeck.LstDeck.Count())]; }
-    //     set 
-    //     {
-    //         if (value == 11)
-    //         {
-    //             value = 1;
-    //         }
-    //     }
-    // }
-    public int UserScore { get { return userCards.Sum(); } }
-    public int DealerScore { get { return dealerCards.Sum(); } }
+    public List<double> userCards = [];
+    public List<double> dealerCards = [];
+    public double UserScore { get { return userCards.Sum(); } }
+    public double DealerScore { get { return dealerCards.Sum(); } }
     private Deck mainDeck = new Deck();
     static Random rnd = new Random();
     public void UserDrawCard()
     {
-        // int newCard = mainDeck.LstDeck.Find(x => x == rnd.Next(0, mainDeck.LstDeck.Count() - 1));
-        int newCard = mainDeck.LstDeck[rnd.Next(0, mainDeck.LstDeck.Count())];
+        double newCard = mainDeck.LstDeck[rnd.Next(0, mainDeck.LstDeck.Count())];
+        string newCardName = mainDeck.DeckCards[mainDeck.LstDeck.IndexOf(newCard)];
+        string[] newCardNameSplit = newCardName.Split(" ");
 
-        if ((newCard == 11) && (UserScore > 10))
-        {
-            newCard = 1;
-        }
+        bool isPictureCard = newCardNameSplit[1] == "Jack" || newCardNameSplit[1] == "Queen" || newCardNameSplit[1] == "King";
+        bool isAce = newCardNameSplit[1] == "Ace";
 
-        userCards.Add(newCard);
-        Console.WriteLine($"Your new card's value is {newCard}");
+        // Give appropriate values to cards
+        if (isPictureCard) { userCards.Add(10); }
+        else if (isAce) { userCards.Add(11); }
+        else { userCards.Add(Math.Floor(newCard)); }
 
+        Console.WriteLine($"Your new card's value is {newCardName}");
+
+        // Remove card from deck
+        mainDeck.DeckCards.Remove(newCardName);
         mainDeck.LstDeck.Remove(newCard);
     }
     public void DealerDrawCard()
     {
-        // int newCard = mainDeck.LstDeck.Find(x => x == rnd.Next(1, 12));
-        int newCard = mainDeck.LstDeck[rnd.Next(0, mainDeck.LstDeck.Count())];
+        double newCard = mainDeck.LstDeck[rnd.Next(0, mainDeck.LstDeck.Count())];
+        string newCardName = mainDeck.DeckCards[mainDeck.LstDeck.IndexOf(newCard)];
+        string[] newCardNameSplit = newCardName.Split(" ");
 
-        if ((newCard == 11) && (DealerScore > 10))
-        {
-            newCard = 1;
-        }
+        bool isPictureCard = newCardNameSplit[1] == "Jack" || newCardNameSplit[1] == "Queen" || newCardNameSplit[1] == "King";
+        bool isAce = newCardNameSplit[1] == "Ace";
 
-        dealerCards.Add(newCard);
+        // Give appropriate values to cards
+        if (isPictureCard) { dealerCards.Add(10); }
+        else if (isAce) { dealerCards.Add(11); }
+        else { dealerCards.Add(Math.Floor(newCard)); }
+
         if ((dealerCards.Count() == 2) && (DealerScore != 21))
         {
             Console.WriteLine("Dealer's new card's value is hidden.");
         }
         else
         {
-            Console.WriteLine($"Dealer's new cards value is {newCard}");
+            Console.WriteLine($"Dealer's new cards value is {newCardName}");
         }
 
+        // Remove card from deck
+        mainDeck.DeckCards.Remove(newCardName);
         mainDeck.LstDeck.Remove(newCard);
     }
 
@@ -67,7 +66,7 @@ public class Game
     }
     public bool IsBlackJack()
     {
-        if((userCards.Count == 2) && (UserScore == 21))
+        if ((userCards.Count == 2) && (UserScore == 21))
         {
             return true;
         }
@@ -76,10 +75,10 @@ public class Game
     }
     public void PrintCurrentDeck()
     {
-        foreach (int c in mainDeck.LstDeck)
+        foreach (string c in mainDeck.DeckCards)
         {
             Console.Write($"{c} | ");
         }
-
+        // Console.WriteLine(mainDeck.LstDeck.Count());
     }
 }
